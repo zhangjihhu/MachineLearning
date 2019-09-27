@@ -31,7 +31,7 @@ class LinerRegression:
             print('epochs %d loss %f' % (i, loss))
             loss_list.append(loss)
             dw = np.dot(x.T, dnet) / num_train
-            db = np.mean(y - out, axis=0) / num_train
+            db = np.mean(dnet, axis=0) / num_train
             w -= lr * dw
             b -= lr * db
         params = {'w': w, 'b': b}
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         y_test = y[offset:]
 
         w, b = liner.param_init(x_train.shape[1], 1)
-        param, loss_list = liner.train(x_train, y_trian, 1000, 0.01)
+        param, loss_list = liner.train(x_train, y_trian, 10000, 0.01)
         y_pred = liner.predict(x_test, param['w'], param['b'])
 
         plt.plot(loss_list)
